@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Planner - Explore the World</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .hero-bg {
+            background: transparent;
+        }
+        
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.8s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .destination-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        /* Mobile-specific styles */
+        @media (max-width: 640px) {
+            .destination-card {
+                margin-bottom: 1rem;
+            }
+            
+            .destination-card .relative {
+                height: 200px;
+            }
+            
+            .destination-card .p-6 {
+                padding: 1rem;
+            }
+            
+            .destination-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .destination-card p {
+                font-size: 0.875rem;
+                line-height: 1.4;
+            }
+        }
+        
+        /* Tablet-specific styles */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .destination-card .relative {
+                height: 220px;
+            }
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white shadow-lg border-b border-gray-200">
+        <div class="container mx-auto px-4 sm:px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-globe-americas text-xl sm:text-2xl text-blue-500"></i>
+                    <span class="text-lg sm:text-xl font-bold gradient-text">TravelPlanner</span>
+                </div>
+                <div class="hidden md:flex space-x-6 lg:space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">Home</a>
+                    <a href="#destinations" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">Destinations</a>
+                    <a href="#planner" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">Planner</a>
+                    <a href="#about" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">About</a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden text-gray-700 p-2">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-gray-200 mt-4 py-4">
+                <div class="flex flex-col space-y-4">
+                    <a href="#home" class="text-gray-700 hover:text-blue-500 transition-colors font-medium px-4 py-2">Home</a>
+                    <a href="#destinations" class="text-gray-700 hover:text-blue-500 transition-colors font-medium px-4 py-2">Destinations</a>
+                    <a href="#planner" class="text-gray-700 hover:text-blue-500 transition-colors font-medium px-4 py-2">Planner</a>
+                    <a href="#about" class="text-gray-700 hover:text-blue-500 transition-colors font-medium px-4 py-2">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        <!-- Travel Background Images -->
+        <div class="absolute inset-0">
+            <div class="grid grid-cols-3 grid-rows-2 h-full">
+                <div class="bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1499856871958-5b9627545d1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1682687979601-082a1295b78f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMXx8fGVufDB8fHx8fA%3D%3D')"></div>
+                <div class="bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1538970272646-f61fabb3a8a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"></div>
+            </div>
+            <!-- Dark overlay for text readability -->
+            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 text-center text-white relative z-10">
+            <div class="slide-in">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6">
+                    Explore the <span class="gradient-text">World</span>
+                </h1>
+                <p class="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 opacity-90 px-4">
+                    Plan your perfect journey with our intelligent travel planner
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
+                    <a href="planner.html" class="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 inline-flex items-center justify-center">
+                        <i class="fas fa-rocket mr-2"></i>Start Planning
+                    </a>
+                    <button onclick="playDemo()" class="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-all transform hover:scale-105">
+                        <i class="fas fa-play mr-2"></i>Watch Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+            <div class="animate-bounce">
+                <i class="fas fa-chevron-down text-white text-2xl"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Video Modal -->
+    <div id="demoModal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-4 max-w-4xl w-full mx-4 relative">
+            <button onclick="closeDemo()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="aspect-video bg-gray-900 rounded-lg overflow-hidden">
+                <video id="demoVideo" class="w-full h-full" controls>
+                    <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="mt-4 text-center">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Travel Planner Demo</h3>
+                <p class="text-gray-600">See how easy it is to plan your perfect trip with our interactive travel planner!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Destination Details Modal -->
+    <div id="destinationModal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto relative">
+            <button onclick="closeDestinationModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl z-10">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div id="destinationModalContent" class="p-8">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Destinations Section -->
+    <section id="destinations" class="py-12 sm:py-16 md:py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 gradient-text">Popular Destinations</h2>
+                <p class="text-gray-600 text-base sm:text-lg">Discover amazing places around the world</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Destination Card 1 - Paris -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Paris" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Paris, France</h3>
+                            <p class="text-sm opacity-90">City of Love</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$1,200</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.9</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Experience the magic of the Eiffel Tower, Louvre Museum, and charming streets of Montmartre.</p>
+                        <button onclick="openDestination('paris')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 2 - Tokyo -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1538970272646-f61fabb3a8a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Tokyo" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Tokyo, Japan</h3>
+                            <p class="text-sm opacity-90">Land of Rising Sun</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$1,800</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.8</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Immerse yourself in the perfect blend of tradition and technology in this vibrant metropolis.</p>
+                        <button onclick="openDestination('tokyo')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 3 - New York -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="New York" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">New York, USA</h3>
+                            <p class="text-sm opacity-90">The Big Apple</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$1,500</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.7</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Explore Times Square, Central Park, and the iconic skyline of Manhattan.</p>
+                        <button onclick="openDestination('newyork')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 4 - Bali -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Bali" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Bali, Indonesia</h3>
+                            <p class="text-sm opacity-90">Island of Gods</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$900</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.9</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Discover tropical beaches, ancient temples, and lush rice terraces in paradise.</p>
+                        <button onclick="openDestination('bali')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 5 - Santorini -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Santorini" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Santorini, Greece</h3>
+                            <p class="text-sm opacity-90">Aegean Paradise</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$1,400</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.8</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Experience stunning sunsets, white-washed buildings, and crystal-clear waters.</p>
+                        <button onclick="openDestination('santorini')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 6 - Dubai -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Dubai" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Dubai, UAE</h3>
+                            <p class="text-sm opacity-90">City of Gold</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$2,200</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.6</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Luxury shopping, ultramodern architecture, and a lively nightlife scene.</p>
+                        <button onclick="openDestination('dubai')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 7 - Machu Picchu -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1587595431973-160d0d94add1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Machu Picchu" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Machu Picchu, Peru</h3>
+                            <p class="text-sm opacity-90">Lost City</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$1,600</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.9</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Ancient Incan citadel set high in the Andes Mountains with breathtaking views.</p>
+                        <button onclick="openDestination('machupicchu')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 8 - Sydney -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Sydney" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Sydney, Australia</h3>
+                            <p class="text-sm opacity-90">Harbor City</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$2,000</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.7</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Iconic Opera House, beautiful beaches, and vibrant city life down under.</p>
+                        <button onclick="openDestination('sydney')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 9 - Venice -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Venice" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Venice, Italy</h3>
+                            <p class="text-sm opacity-90">City of Canals</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$1,300</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.8</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Romantic gondola rides, historic architecture, and timeless beauty.</p>
+                        <button onclick="openDestination('venice')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 10 - Cape Town -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Cape Town" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Cape Town, South Africa</h3>
+                            <p class="text-sm opacity-90">Mother City</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$1,100</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.6</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Table Mountain, beautiful beaches, and rich cultural heritage.</p>
+                        <button onclick="openDestination('capetown')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 11 - Bangkok -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://plus.unsplash.com/premium_photo-1661963188068-1bac46e28727?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmFua29rfGVufDB8fDB8fHww" 
+                             alt="Bangkok" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Bangkok, Thailand</h3>
+                            <p class="text-sm opacity-90">City of Angels</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$800</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.5</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Temples, street food, and vibrant nightlife in the heart of Southeast Asia.</p>
+                        <button onclick="openDestination('bangkok')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 12 - Rio de Janeiro -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Rio de Janeiro" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Rio de Janeiro, Brazil</h3>
+                            <p class="text-sm opacity-90">Marvelous City</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$1,400</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.7</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Christ the Redeemer, Copacabana Beach, and Carnival spirit.</p>
+                        <button onclick="openDestination('rio')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 13 - Marrakech -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://media.istockphoto.com/id/1294321554/photo/koutoubia-mosque-in-the-morning-marrakesh-morocco.webp?a=1&b=1&s=612x612&w=0&k=20&c=tNk9iwx0_O2f5ZypWlper35biMTDBAbGFbTfXvhrF9w=" 
+                             alt="Marrakech" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Marrakech, Morocco</h3>
+                            <p class="text-sm opacity-90">Red City</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$900</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.6</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Medina souks, riads, and the magic of the Sahara Desert.</p>
+                        <button onclick="openDestination('marrakech')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 14 - Singapore -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                             alt="Singapore" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Singapore</h3>
+                            <p class="text-sm opacity-90">Lion City</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$1,600</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.8</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Gardens by the Bay, Marina Bay Sands, and multicultural cuisine.</p>
+                        <button onclick="openDestination('singapore')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Destination Card 15 - Iceland -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1590153739486-208b4dbb473c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aWNlJTIwbGFuZHxlbnwwfHwwfHx8MA%3D%3D" 
+                             alt="Iceland" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Iceland</h3>
+                            <p class="text-sm opacity-90">Land of Fire & Ice</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-2xl font-bold text-blue-600">$2,500</span>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-gray-600 ml-2">4.9</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Northern Lights, geysers, waterfalls, and volcanic landscapes.</p>
+                        <button onclick="openDestination('iceland')" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            Plan Trip
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel Planner Section -->
+    <section id="planner" class="py-12 sm:py-16 md:py-20 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 gradient-text">Plan Your Perfect Trip</h2>
+                <p class="text-gray-600 text-base sm:text-lg">Create a personalized travel itinerary in minutes</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-xl p-4 sm:p-6 md:p-8 card-3d">
+                    <form id="travelForm" class="space-y-4 sm:space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Destination</label>
+                                <input type="text" id="destination" placeholder="Where do you want to go?" 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Travel Dates</label>
+                                <input type="date" id="startDate" 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Return Date</label>
+                                <input type="date" id="endDate" 
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Travelers</label>
+                                <select id="travelers" 
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="1">1 Person</option>
+                                    <option value="2">2 People</option>
+                                    <option value="3">3 People</option>
+                                    <option value="4">4 People</option>
+                                    <option value="5+">5+ People</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Budget Range</label>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="budget" value="budget" class="mr-2">
+                                    <span>Budget</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="budget" value="moderate" class="mr-2">
+                                    <span>Moderate</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="budget" value="luxury" class="mr-2">
+                                    <span>Luxury</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="budget" value="premium" class="mr-2">
+                                    <span>Premium</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Interests</label>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" name="interests" value="culture" class="mr-2">
+                                    <span>Culture</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" name="interests" value="adventure" class="mr-2">
+                                    <span>Adventure</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" name="interests" value="food" class="mr-2">
+                                    <span>Food</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="checkbox" name="interests" value="nature" class="mr-2">
+                                    <span>Nature</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105">
+                            <i class="fas fa-magic mr-2"></i>Generate Travel Plan
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Results Section -->
+                <div id="results" class="mt-8 hidden">
+                    <div class="bg-white rounded-2xl shadow-xl p-8">
+                        <h3 class="text-2xl font-bold mb-6 gradient-text">Your Personalized Travel Plan</h3>
+                        <div id="planContent" class="space-y-4">
+                            <!-- Plan content will be generated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-12 sm:py-16 md:py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 gradient-text">Why Choose Us</h2>
+                <p class="text-gray-600 text-base sm:text-lg">Experience the best in travel planning</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-robot text-3xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">AI-Powered Planning</h3>
+                    <p class="text-gray-600">Our intelligent system creates personalized itineraries based on your preferences.</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-clock text-3xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Save Time</h3>
+                    <p class="text-gray-600">Plan your entire trip in minutes, not hours. Get instant recommendations.</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-3xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Safe & Secure</h3>
+                    <p class="text-gray-600">Your data is protected with bank-level security. Travel with confidence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 sm:py-12">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-globe-americas text-2xl text-blue-500"></i>
+                        <span class="text-xl font-bold">TravelPlanner</span>
+                    </div>
+                    <p class="text-gray-400">Your trusted companion for creating unforgettable travel experiences.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Destinations</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Planner</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">About</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 TravelPlanner. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
