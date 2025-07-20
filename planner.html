@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Planner - Plan Like a Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .hero-bg {
+            background: transparent;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .planning-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .planning-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        /* Mobile-specific styles */
+        @media (max-width: 640px) {
+            .planning-card {
+                margin-bottom: 1rem;
+            }
+            
+            .planning-card .relative {
+                height: 200px;
+            }
+            
+            .planning-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .planning-card p {
+                font-size: 0.875rem;
+                line-height: 1.4;
+            }
+        }
+        
+        /* Tablet-specific styles */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .planning-card .relative {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white shadow-lg border-b border-gray-200">
+        <div class="container mx-auto px-4 sm:px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-globe-americas text-xl sm:text-2xl text-blue-500"></i>
+                    <span class="text-lg sm:text-xl font-bold gradient-text">TravelPlanner</span>
+                </div>
+                <div class="hidden md:flex space-x-6 lg:space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">Home</a>
+                    <a href="#features" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">Features</a>
+                    <a href="#how-it-works" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">How It Works</a>
+                    <a href="#pricing" class="text-gray-700 hover:text-blue-500 transition-colors font-medium">Pricing</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="text-gray-700 hover:text-blue-500 transition-colors font-medium">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Sign In
+                    </button>
+                    <button class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors font-medium">
+                        Sign Up—It's Free!
+                    </button>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden text-gray-700 p-2">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-gray-200 mt-4 py-4">
+                <div class="flex flex-col space-y-4">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-500 transition-colors font-medium px-4 py-2">Home</a>
+                    <a href="#features" class="text-gray-700 hover:text-blue-500 transition-colors font-medium px-4 py-2">Features</a>
+                    <a href="#how-it-works" class="text-gray-700 hover:text-blue-500 transition-colors font-medium px-4 py-2">How It Works</a>
+                    <a href="#pricing" class="text-gray-700 hover:text-blue-500 transition-colors font-medium px-4 py-2">Pricing</a>
+                    <div class="border-t border-gray-200 pt-4 mt-4">
+                        <button class="w-full text-left text-gray-700 hover:text-blue-500 transition-colors font-medium px-4 py-2">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Sign In
+                        </button>
+                        <button class="w-full mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                            Sign Up—It's Free!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <div class="absolute inset-0">
+            <div class="bg-cover bg-center h-full" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')"></div>
+            <!-- Dark overlay for text readability -->
+            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 text-center text-white relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6">
+                    An easier trip,<br>
+                    <span class="gradient-text">each time</span>
+                </h1>
+                <p class="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 opacity-90 px-4">
+                    Imagine checking one place for your travel details and getting a heads up as things happen throughout your trip. See why life without TravelPlanner is a distant memory for millions of travelers.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
+                    <button class="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105">
+                        <i class="fas fa-rocket mr-2"></i>Get Started
+                    </button>
+                    <button class="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-all transform hover:scale-105">
+                        <i class="fas fa-play mr-2"></i>Watch Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flight Photos Section -->
+    <section class="py-12 sm:py-16 md:py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 gradient-text">Experience the Joy of Flying</h2>
+                <p class="text-lg sm:text-xl text-gray-600">Discover amazing destinations from the sky</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Flight Photo 1 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1730801734538-11712acc76a7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZmxpZ2h0JTIwcGhvdG98ZW58MHx8MHx8fDA%3D" 
+                             alt="Airplane in Flight" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">✈️ Sky High Dreams</h3>
+                            <p class="text-sm opacity-90">"Where clouds become your playground"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Photo 2 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                    <div class="relative h-64">
+                        <img src="https://media.istockphoto.com/id/1164049513/photo/airplane-taking-off-from-the-airport.webp?a=1&b=1&s=612x612&w=0&k=20&c=4AXnVNX_aLd_fYABRreYA22JQNaXuvcKj6oM3RibAYk=" 
+                             alt="Airplane Takeoff" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">🚀 Takeoff to Adventure</h3>
+                            <p class="text-sm opacity-90">"Every takeoff is a new beginning"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Photo 3 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Airplane Window View" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">🪟 Window to the World</h3>
+                            <p class="text-sm opacity-90">"The best seat in the house"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Photo 4 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1728839470517-e870c788f7cd?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGxhbmRpbmclMjBmbGlnaHR8ZW58MHx8MHx8fDA%3D" 
+                             alt="Airplane Landing" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">🎯 Landing in Paradise</h3>
+                            <p class="text-sm opacity-90">"Touchdown to your dreams"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Photo 5 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1630879937467-4afa290b1a6b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8U0tZJTIwZGl2aW5nfGVufDB8fDB8fHww" 
+                             alt="Airplane at Airport" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">🏢 Gateway to Adventure</h3>
+                            <p class="text-sm opacity-90">"Where journeys begin"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Photo 6 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Sunset Flight" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">🌅 Golden Hour Flight</h3>
+                            <p class="text-sm opacity-90">"Flying into the sunset"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flight Stats -->
+            <div class="mt-16 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <div class="text-3xl font-bold text-blue-600 mb-2">500+</div>
+                        <div class="text-gray-600">Destinations</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-green-600 mb-2">24/7</div>
+                        <div class="text-gray-600">Flight Support</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-purple-600 mb-2">99%</div>
+                        <div class="text-gray-600">On-time Flights</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-orange-600 mb-2">50K+</div>
+                        <div class="text-gray-600">Happy Travelers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-20 relative overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+                 alt="Beautiful Destination" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 text-white">Search Destinations</h2>
+                <p class="text-xl text-white opacity-90">Find your perfect travel destination</p>
+            </div>
+            
+            <div class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <div class="flex items-center bg-white rounded-2xl shadow-lg p-4 border border-gray-200">
+                        <i class="fas fa-search text-gray-400 mr-4 text-xl"></i>
+                        <input type="text" id="destinationSearch" placeholder="Search destinations..." 
+                               class="flex-1 text-lg focus:outline-none"
+                               autocomplete="off">
+                        <button class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition-colors font-semibold">
+                            Search
+                        </button>
+                    </div>
+                    <div id="searchSuggestions" class="absolute z-50 w-full bg-white border border-gray-300 rounded-xl shadow-lg mt-2 max-h-60 overflow-y-auto hidden">
+                        <!-- Suggestions will appear here -->
+                    </div>
+                </div>
+                
+                <!-- Popular Destinations -->
+                <div class="mt-12">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6 text-center">Popular Destinations</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <button onclick="selectDestination('Paris, France')" class="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all hover:scale-105 border border-gray-200">
+                            <div class="text-center">
+                                <i class="fas fa-landmark text-blue-500 text-2xl mb-2"></i>
+                                <div class="font-semibold text-gray-800">Paris</div>
+                                <div class="text-sm text-gray-600">France</div>
+                            </div>
+                        </button>
+                        <button onclick="selectDestination('Tokyo, Japan')" class="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all hover:scale-105 border border-gray-200">
+                            <div class="text-center">
+                                <i class="fas fa-torii-gate text-red-500 text-2xl mb-2"></i>
+                                <div class="font-semibold text-gray-800">Tokyo</div>
+                                <div class="text-sm text-gray-600">Japan</div>
+                            </div>
+                        </button>
+                        <button onclick="selectDestination('Bali, Indonesia')" class="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all hover:scale-105 border border-gray-200">
+                            <div class="text-center">
+                                <i class="fas fa-umbrella-beach text-green-500 text-2xl mb-2"></i>
+                                <div class="font-semibold text-gray-800">Bali</div>
+                                <div class="text-sm text-gray-600">Indonesia</div>
+                            </div>
+                        </button>
+                        <button onclick="selectDestination('Santorini, Greece')" class="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all hover:scale-105 border border-gray-200">
+                            <div class="text-center">
+                                <i class="fas fa-sun text-yellow-500 text-2xl mb-2"></i>
+                                <div class="font-semibold text-gray-800">Santorini</div>
+                                <div class="text-sm text-gray-600">Greece</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Feature Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-4xl font-bold mb-6 gradient-text">
+                        You handle the booking, we'll take it from there
+                    </h2>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Unlike other travel apps, TravelPlanner can organize your travel plans no matter where you book. Simply forward your confirmation emails to plans@travelplanner.com and in a matter of seconds, we'll create a comprehensive itinerary for every trip.
+                    </p>
+                    <button class="text-blue-600 font-semibold hover:text-blue-700 transition-colors">
+                        Learn how it works <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+                <div class="relative">
+                    <div class="bg-gray-100 rounded-2xl p-8 shadow-lg">
+                        <div class="flex items-center space-x-4 mb-6">
+                            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-mobile-alt text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">Mobile App</h3>
+                                <p class="text-sm text-gray-600">Always with you</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-semibold">Flight to Paris</h4>
+                                        <p class="text-sm text-gray-600">Air France • AF123</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-semibold">10:30 AM</p>
+                                        <p class="text-sm text-green-600">On Time</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-semibold">Hotel Check-in</h4>
+                                        <p class="text-sm text-gray-600">Le Grand Hotel</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-semibold">3:00 PM</p>
+                                        <p class="text-sm text-blue-600">Confirmed</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="py-20 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="testimonial-card bg-white rounded-2xl p-8 shadow-lg">
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <blockquote class="text-xl text-gray-700 mb-6 italic">
+                        "I'm on the road 100 days a year and TravelPlanner is my go-to app. It's such a powerful tool in the hands of a traveler. There's simply nothing like it on the planet."
+                    </blockquote>
+                    <p class="font-semibold text-gray-800">— Damen L.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews & Ratings Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">What Our Users Say</h2>
+                <p class="text-xl text-gray-600">Join thousands of satisfied travelers worldwide</p>
+                <div class="flex items-center justify-center mt-6">
+                    <div class="flex items-center space-x-1">
+                        <i class="fas fa-star text-yellow-400 text-2xl"></i>
+                        <i class="fas fa-star text-yellow-400 text-2xl"></i>
+                        <i class="fas fa-star text-yellow-400 text-2xl"></i>
+                        <i class="fas fa-star text-yellow-400 text-2xl"></i>
+                        <i class="fas fa-star text-yellow-400 text-2xl"></i>
+                    </div>
+                    <span class="ml-3 text-lg font-semibold text-gray-700">4.8/5</span>
+                    <span class="ml-2 text-gray-600">(2,847 reviews)</span>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="testimonial-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-lg">S</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Sarah Johnson</h4>
+                            <div class="flex items-center">
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                </div>
+                                <span class="ml-2 text-sm text-gray-600">5.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 italic">
+                        "TravelPlanner saved me during my business trip to Tokyo. The real-time flight alerts and alternative route suggestions were a lifesaver when my flight got delayed!"
+                    </p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        <span>Verified User • 2 weeks ago</span>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="testimonial-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-lg">M</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Michael Chen</h4>
+                            <div class="flex items-center">
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                </div>
+                                <span class="ml-2 text-sm text-gray-600">5.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 italic">
+                        "The email forwarding feature is brilliant! I just forward all my booking confirmations and everything gets organized automatically. No more digging through emails!"
+                    </p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        <span>Verified User • 1 month ago</span>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="testimonial-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-lg">E</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Emma Rodriguez</h4>
+                            <div class="flex items-center">
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-gray-300 text-sm"></i>
+                                </div>
+                                <span class="ml-2 text-sm text-gray-600">4.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 italic">
+                        "Great app for organizing family vacations! The point tracking feature helps me maximize my rewards. Would love to see more hotel integration options."
+                    </p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        <span>Verified User • 3 weeks ago</span>
+                    </div>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="testimonial-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-lg">D</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">David Thompson</h4>
+                            <div class="flex items-center">
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                </div>
+                                <span class="ml-2 text-sm text-gray-600">5.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 italic">
+                        "As a frequent business traveler, this app is essential. The location-based reminders and restaurant recommendations near my hotel are incredibly helpful."
+                    </p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        <span>Verified User • 1 week ago</span>
+                    </div>
+                </div>
+
+                <!-- Review 5 -->
+                <div class="testimonial-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-lg">L</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Lisa Wang</h4>
+                            <div class="flex items-center">
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                </div>
+                                <span class="ml-2 text-sm text-gray-600">5.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 italic">
+                        "The mobile app is so intuitive! I love how it syncs across all my devices. The weather alerts and alternative flight suggestions are game-changers."
+                    </p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        <span>Verified User • 2 days ago</span>
+                    </div>
+                </div>
+
+                <!-- Review 6 -->
+                <div class="testimonial-card bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-r from-teal-500 to-green-600 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold text-lg">R</span>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Robert Kim</h4>
+                            <div class="flex items-center">
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                    <i class="fas fa-star text-gray-300 text-sm"></i>
+                                </div>
+                                <span class="ml-2 text-sm text-gray-600">4.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 italic">
+                        "Excellent for solo travel! The safety alerts and local recommendations are spot-on. The interface is clean and easy to navigate."
+                    </p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        <span>Verified User • 5 days ago</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overall Rating Stats -->
+            <div class="mt-16 bg-gray-50 rounded-2xl p-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <div class="text-3xl font-bold text-blue-600 mb-2">4.8</div>
+                        <div class="text-gray-600">Average Rating</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-green-600 mb-2">2,847</div>
+                        <div class="text-gray-600">Total Reviews</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-purple-600 mb-2">98%</div>
+                        <div class="text-gray-600">Satisfaction Rate</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-orange-600 mb-2">50K+</div>
+                        <div class="text-gray-600">Active Users</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Helpful reminders and alerts so you don't miss a beat</h2>
+                <p class="text-xl text-gray-600">Packed with features that give you a leg up on changes and help you make the most of all your trips.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="planning-card bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                    <div class="feature-icon w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-bell text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Smart Alerts</h3>
+                    <p class="text-gray-600 mb-4">Get notified about flight delays, gate changes, and weather updates in real-time.</p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Flight status updates</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Gate change notifications</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Weather alerts</li>
+                    </ul>
+                </div>
+
+                <div class="planning-card bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                    <div class="feature-icon w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-map-marker-alt text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Location Services</h3>
+                    <p class="text-gray-600 mb-4">Know where to be and when with intelligent location-based reminders.</p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Airport departure reminders</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Hotel check-in alerts</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Restaurant recommendations</li>
+                    </ul>
+                </div>
+
+                <div class="planning-card bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                    <div class="feature-icon w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-sync-alt text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Auto-Sync</h3>
+                    <p class="text-gray-600 mb-4">Automatically organize your travel plans from any booking source.</p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Email forwarding</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Calendar integration</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Multi-device sync</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">How It Works</h2>
+                <p class="text-xl text-gray-600">Three simple steps to organize your travel</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="step-number w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">1</div>
+                    <h3 class="text-xl font-bold mb-4">Book Your Trip</h3>
+                    <p class="text-gray-600">Book flights, hotels, and activities from any website or travel agency.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="step-number w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">2</div>
+                    <h3 class="text-xl font-bold mb-4">Forward Emails</h3>
+                    <p class="text-gray-600">Simply forward your confirmation emails to plans@travelplanner.com</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="step-number w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">3</div>
+                    <h3 class="text-xl font-bold mb-4">Get Organized</h3>
+                    <p class="text-gray-600">Receive a comprehensive itinerary with all your travel details organized.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Choose Your Plan</h2>
+                <p class="text-xl text-gray-600">Start free, upgrade when you need more</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="planning-card bg-white rounded-2xl p-8 shadow-lg border-2 border-gray-200">
+                    <h3 class="text-2xl font-bold mb-4">Free</h3>
+                    <p class="text-4xl font-bold mb-6">$0<span class="text-lg text-gray-600">/month</span></p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Basic itinerary organization</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Email forwarding</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Mobile app access</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Basic alerts</li>
+                    </ul>
+                    <button class="w-full bg-gray-600 text-white py-3 rounded-lg hover:bg-gray-700 transition-colors">
+                        Get Started Free
+                    </button>
+                </div>
+                
+                <div class="planning-card bg-white rounded-2xl p-8 shadow-lg border-2 border-blue-500 relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold">Most Popular</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Pro</h3>
+                    <p class="text-4xl font-bold mb-6">$49<span class="text-lg text-gray-600">/year</span></p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Everything in Free</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Real-time flight alerts</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Alternative flight suggestions</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Point tracking</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Premium support</li>
+                    </ul>
+                    <button class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                        Start Free Trial
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div class="container mx-auto px-6 text-center text-white">
+            <h2 class="text-4xl font-bold mb-6">Try the travel app that keeps up with you</h2>
+            <p class="text-xl mb-8 opacity-90">So many trips, so little time. Let TravelPlanner worry about the details, so you don't have to.</p>
+            <button class="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105">
+                Sign Up—It's Free!
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-globe-americas text-2xl text-blue-500"></i>
+                        <span class="text-xl font-bold">TravelPlanner</span>
+                    </div>
+                    <p class="text-gray-400">Your trusted companion for creating unforgettable travel experiences.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Download App</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">TravelPlanner</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">TravelPlanner Pro</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">News & Resources</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Traveler Resource Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Jobs</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Statement</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 TravelPlanner. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Destination data for search suggestions
+        const destinations = [
+            { name: 'Paris, France', category: 'Europe', icon: 'fas fa-landmark', color: 'text-blue-500' },
+            { name: 'Tokyo, Japan', category: 'Asia', icon: 'fas fa-torii-gate', color: 'text-red-500' },
+            { name: 'Bali, Indonesia', category: 'Asia', icon: 'fas fa-umbrella-beach', color: 'text-green-500' },
+            { name: 'Santorini, Greece', category: 'Europe', icon: 'fas fa-sun', color: 'text-yellow-500' },
+            { name: 'New York City, USA', category: 'North America', icon: 'fas fa-city', color: 'text-purple-500' },
+            { name: 'Dubai, UAE', category: 'Middle East', icon: 'fas fa-mosque', color: 'text-orange-500' },
+            { name: 'Venice, Italy', category: 'Europe', icon: 'fas fa-water', color: 'text-blue-400' },
+            { name: 'Cape Town, South Africa', category: 'Africa', icon: 'fas fa-mountain', color: 'text-green-600' },
+            { name: 'Bangkok, Thailand', category: 'Asia', icon: 'fas fa-temple-buddhist', color: 'text-orange-400' },
+            { name: 'Rio de Janeiro, Brazil', category: 'South America', icon: 'fas fa-christ', color: 'text-green-500' },
+            { name: 'Marrakech, Morocco', category: 'Africa', icon: 'fas fa-mosque', color: 'text-red-600' },
+            { name: 'Singapore', category: 'Asia', icon: 'fas fa-building', color: 'text-red-500' },
+            { name: 'Iceland', category: 'Europe', icon: 'fas fa-snowflake', color: 'text-blue-300' },
+            { name: 'Sydney, Australia', category: 'Oceania', icon: 'fas fa-sydney-opera-house', color: 'text-blue-600' },
+            { name: 'Machu Picchu, Peru', category: 'South America', icon: 'fas fa-mountain', color: 'text-green-700' },
+            { name: 'Maldives', category: 'Asia', icon: 'fas fa-water', color: 'text-blue-400' },
+            { name: 'Switzerland', category: 'Europe', icon: 'fas fa-mountain', color: 'text-red-500' },
+            { name: 'Canada', category: 'North America', icon: 'fas fa-maple-leaf', color: 'text-red-600' },
+            { name: 'New Zealand', category: 'Oceania', icon: 'fas fa-kiwi-bird', color: 'text-green-600' },
+            { name: 'Egypt', category: 'Africa', icon: 'fas fa-pyramid', color: 'text-yellow-600' }
+        ];
+
+        // Search functionality
+        const searchInput = document.getElementById('destinationSearch');
+        const suggestionsContainer = document.getElementById('searchSuggestions');
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            
+            if (query.length === 0) {
+                suggestionsContainer.classList.add('hidden');
+                return;
+            }
+
+            const filteredDestinations = destinations.filter(dest => 
+                dest.name.toLowerCase().includes(query) || 
+                dest.category.toLowerCase().includes(query)
+            );
+
+            if (filteredDestinations.length > 0) {
+                showSuggestions(filteredDestinations);
+            } else {
+                suggestionsContainer.classList.add('hidden');
+            }
+        });
+
+        function showSuggestions(suggestions) {
+            suggestionsContainer.innerHTML = suggestions.map(dest => `
+                <div class="suggestion-item p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0" 
+                     onclick="selectDestination('${dest.name}')">
+                    <div class="flex items-center">
+                        <i class="${dest.icon} ${dest.color} mr-3 text-lg"></i>
+                        <div>
+                            <div class="font-semibold text-gray-800">${dest.name}</div>
+                            <div class="text-sm text-gray-600">${dest.category}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            suggestionsContainer.classList.remove('hidden');
+        }
+
+        function selectDestination(destinationName) {
+            searchInput.value = destinationName;
+            suggestionsContainer.classList.add('hidden');
+            
+            // Show success message
+            showNotification(`Selected: ${destinationName}`, 'success');
+            
+            // You can add more functionality here, like opening the destination modal
+            // For now, we'll just show a notification
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full`;
+            
+            if (type === 'success') {
+                notification.className += ' bg-green-500 text-white';
+            } else if (type === 'error') {
+                notification.className += ' bg-red-500 text-white';
+            } else {
+                notification.className += ' bg-blue-500 text-white';
+            }
+            
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} mr-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Close suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
+                suggestionsContainer.classList.add('hidden');
+            }
+        });
+
+        // Keyboard navigation for suggestions
+        searchInput.addEventListener('keydown', function(e) {
+            const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
+            const currentIndex = Array.from(suggestions).findIndex(item => item.classList.contains('bg-blue-50'));
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (currentIndex < suggestions.length - 1) {
+                    if (currentIndex >= 0) suggestions[currentIndex].classList.remove('bg-blue-50');
+                    suggestions[currentIndex + 1].classList.add('bg-blue-50');
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (currentIndex > 0) {
+                    suggestions[currentIndex].classList.remove('bg-blue-50');
+                    suggestions[currentIndex - 1].classList.add('bg-blue-50');
+                }
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (currentIndex >= 0) {
+                    suggestions[currentIndex].click();
+                }
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation to cards
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.planning-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+                
+                // Close mobile menu when clicking on a link
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+                
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            }
+            
+            // Add typing effect to hero title
+            const heroTitle = document.querySelector('h1');
+            if (heroTitle) {
+                const text = heroTitle.textContent;
+                heroTitle.textContent = '';
+                let i = 0;
+                const typeWriter = () => {
+                    if (i < text.length) {
+                        heroTitle.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 50);
+                    }
+                };
+                setTimeout(typeWriter, 1000);
+            }
+        });
+    </script>
+</body>
+</html> 
